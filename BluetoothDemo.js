@@ -5,6 +5,7 @@ const BATTERY_LEVEL = "battery_level";
 
 let characteristicWrite
 async function onButtonClick() {
+    logOnScreen()
     try {
         // log('Requesting Bluetooth Device...');
         const device = await navigator.bluetooth.requestDevice(
@@ -57,6 +58,19 @@ async function updateDistance() {
     await characteristicWrite.writeValueWithoutResponse(value);
 }
 
+function logOnScreen() {
+    var old = console.log;
+    var logger = document.getElementById('log');
+    console.log = function () {
+        for (var i = 0; i < arguments.length; i++) {
+            if (typeof arguments[i] == 'object') {
+                logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(arguments[i], undefined, 2) : arguments[i]) + '<br />';
+            } else {
+                logger.innerHTML += arguments[i] + '<br />';
+            }
+        }
+    }
+}
 const handleCharacteristicValueChanged = (event) => {
     let textDecoder = new TextDecoder('utf-8');
     let value = textDecoder.decode(event.target.value)
