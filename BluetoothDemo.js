@@ -4,18 +4,18 @@ const CHARACTERISTICS_WRITE = "0783b03e-8535-b5a0-7140-a304d2495cba";
 const BATTERY_LEVEL = "battery_level";
 
 let characteristicWrite
-async function onButtonClick() {
+async function onConnectBLEDeviceButtonClick() {
     logOnScreen()
     try {
-        // log('Requesting Bluetooth Device...');
+        log('Requesting Bluetooth Device...');
         const device = await navigator.bluetooth.requestDevice(
             {acceptAllDevices: true, optionalServices: [SERVICE_UUID]}
         );
 
-        // log('Connecting to GATT Server...');
+        log('Connecting to GATT Server...');
         const server = await device.gatt.connect();
 
-        // log('Getting Service...');
+        log('Getting Service...');
         const service = await server.getPrimaryService(SERVICE_UUID);
 
         log('Getting Read Characteristic...');
